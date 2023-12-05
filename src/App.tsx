@@ -4,6 +4,8 @@ import { Home } from './pages/home/Home'
 import { Admin } from './pages/admin/Admin'
 import { Login } from './pages/login/Login'
 import { Networks } from './pages/networks/Networks'
+import './index.css'
+
 
 const router = createBrowserRouter([
   {
