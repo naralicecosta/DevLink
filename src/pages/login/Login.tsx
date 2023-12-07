@@ -1,24 +1,36 @@
-import {  FormEvent ,useState } from 'react'
+import {  FormEvent, useState } from"react"
 
-import { Link } from "react-router-dom"
+import { Link, useNavigate} from "react-router-dom"
 import { Input } from "../../components/input/Input"
 
 import { auth } from '../../services/firebaseConnection'
-//pegar os dados
-const [email, setEmail] = useState("")
-const [password, setPassword] = useState("")
+import { signInWithEmailAndPassword } from 'firebase/auth'
 
-function handleSubmit(e: FormEvent){
-    e.preventDefault(); // para nao atualizar a pagina
-
-    console.log({
-        email: email,
-        password: password
-    })
-
-}
 
 export function Login() {
+    //pegar os dados
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate()
+
+    function handleSubmit(e: FormEvent){
+        e.preventDefault(); // para nao atualizar a pagina
+
+        if (email === '' || password === ''){
+            alert("Preencha todos os campos!")
+            return
+        }
+        signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            console.log("logado com sucesso")
+            navigate("/admin", {replace: true})
+            
+
+        })
+        .catch((error) => (error))
+
+    }
+
     return(
         <div className="flex w-full  h-screen items-center justify-center flex-col">
             <Link to="">
