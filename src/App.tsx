@@ -19,11 +19,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin',
-    element: <Private><Admin /></Private>
+    element:<Admin />
   },
   {
     path: '/admin/social',
-  element: <Private><Networks /></Private>
+  element: <Networks />
   },
 ])
 export {router}
