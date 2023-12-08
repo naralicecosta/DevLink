@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin/social',
-    element: <Private><Networks /></Private>
+  element: <Private><Networks /></Private>
   },
 ])
 export {router}
