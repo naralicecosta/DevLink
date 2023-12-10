@@ -1,15 +1,31 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { Header } from "../../components/header/Header";
 import { Input } from "../../components/input/Input";
 
 import { db } from "../../services/firebaseConnection";
 import {setDoc, doc, getDoc} from 'firebase/firestore'
-import { set } from "firebase/database";
 
 export function Networks() {
     const [linkedin, setLinkedin] = useState("")
     const [instagram, setInstragram] = useState("")
     const [github, setGithub] = useState("")
+
+    useEffect(() => {
+        function loadLinks(){
+            const docRef = doc(db, "social", "links")
+            getDoc(docRef)
+            .then((snapshot) =>{
+                if(snapshot.data() !== undefined){
+                    setLinkedin(snapshot.data()?.linkedin)
+                    setInstragram(snapshot.data()?.instagram)
+                    setGithub(snapshot.data()?.github)
+
+                }
+            })
+        }
+        loadLinks()
+
+    },[])
 
     function handleRegister(e: FormEvent){
         e.preventDefault();
