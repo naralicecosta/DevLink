@@ -47,7 +47,7 @@ export function Admin() {
 
 
      function handleRegister(e:FormEvent) {
-        e.preventDefault
+        e.preventDefault();
 
         if(nameInput === "" || urlInput === ""){
             alert("Preencha todos os campos")
@@ -64,15 +64,24 @@ export function Admin() {
     .then(() => {
         setNameInput("")
         setUrlInput("")
+        console.log("CADASTRADO COM SUCESSO!")
 
     })
     .catch((error) => error)
+    console.log("ERRO AO CADSATRAR NO BANCO" )
+
+    }
+    
+    async function handleDeleteLink(id: string){
+        const docRef = doc(db, "links", id)
+        await deleteDoc(docRef)
+
     }
     return(
-        <div className="flex items-center flex-col min-h-screen pb-7 px-2" onSubmit={handleRegister}>
+        <div className="flex items-center flex-col min-h-screen pb-7 px-2" >
             <Header/>
 
-            <form className="flex flex-col mt-8 mb-3 w-full max-w-xl">
+            <form className="flex flex-col mt-8 mb-3 w-full max-w-xl" onSubmit={handleRegister}>
                 <label className="text-white font-medium mt-2 mb-2">Nome do Link</label>
                 <Input 
                 placeholder="Digite o nome do link..."
@@ -122,18 +131,26 @@ export function Admin() {
 
                 </button>
             </form>
-                                <h2 className="font-bold text-white mb-4 text-2xl">Meus links</h2>
+            <h2 className="font-bold text-white mb-4 text-2xl">Meus links</h2>
 
+            {links.map((link) => (
                 <article 
+                key={link.id}
                 className="flex items-center justify-between w-11/12 max-w-xl rounded py-3 px-2 mb-2 select-none"
-                style={{backgroundColor: "#2563cd", color: "#000"}}>
-                    <p>Meu Instagram</p>
+                style={{backgroundColor: link.bg, color: link.color}}>
+                    <p>{link.name}</p>
                     <div>
                         
-                        <button
-                        className="border border-dashed p-1 rounded "><FiTrash size={18} color="#fff"/></button>
+                        <button className="border border-dashed p-1 rounded "
+                        onClick={() => handleDeleteLink(link.id)}>
+
+                            <FiTrash size={18} color="#fff"/>
+                        </button>
                     </div>
                 </article>
+            ))}
+
+        
         </div>
     )
 }
