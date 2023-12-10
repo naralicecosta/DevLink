@@ -24,10 +24,10 @@ export function Private({ children }: PrivateProps): any{
                 setSigned(true)
             }else{
                 setLoading(false)
-                setSigned(true)
+                setSigned(false)
             }
         })
-        return() =>{
+        return() => {
             onsub()
         }
 
@@ -36,7 +36,7 @@ export function Private({ children }: PrivateProps): any{
     if(loading){
         return<div></div>
     }
-    if(signed){
+    if(!signed){
         return <Navigate to="/login" />
     }
 
